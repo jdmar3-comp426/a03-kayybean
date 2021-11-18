@@ -79,5 +79,5 @@ export function searchByYear(car_data, years) {
         _hold.push(..._filtered);
     }
     //let _sorted = _hold.sort((a, b) => b.year - a.year);
-    return _sorted;
+    return _hold;
 }
