@@ -54,7 +54,7 @@ export function searchName(car_data, searchTerm) {
     let _array = [];
     for (let k = 0; k < 60; k++) {
         for (let i = 0; i < car_data.length; i++) {
-            if (car_data[i].toLowerCase().id.search(searchTerm.toLowerCase()) == k) {
+            if (car_data[i].id.toLowerCase().search(searchTerm.toLowerCase()) == k) {
                 _array.push(car_data[i]);
             }
         }
@@ -73,13 +73,11 @@ export function searchName(car_data, searchTerm) {
  */
 export function searchByYear(car_data, years) {
     let _hold = [];
+    years = years.sort(function(a, b){return b-a});
     for (let i = 0; i < years.length; i++) {
         let _filtered = car_data.filter(car => car.year == years[i]);
-        _hold.push(_filtered);
-        /*for (let j = 0; j < _filtered.length; j++) {
-            _hold.push(_filtered[j])
-        }*/
+        _hold.push(..._filtered);
     }
-    let _sorted = _hold.sort((a, b) => b.year - a.year);
+    //let _sorted = _hold.sort((a, b) => b.year - a.year);
     return _sorted;
 }

@@ -200,7 +200,7 @@ export const hasExactly = (arr, test, n) => {
     for (let i = 0; i < arr.length; i++) {
         _list.push(test(arr[i]));
     }
-    if (_list.filter(true).length == n) {
+    if (_list.filter(x => x == true).length == n) {
         return true;
     }
     return false;

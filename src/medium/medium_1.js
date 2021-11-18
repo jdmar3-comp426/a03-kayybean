@@ -71,13 +71,13 @@ export function getStatistics(array) {
     let _sd = Math.sqrt(_variance);
 
     return {
-        min: _min,
-        median: _median,
-        max: _max,
-        variance: _variance,
-        mean: _mean,
         length: _length,
         sum: _sum,
+        mean: _mean,
+        median: _median,
+        min: _min,      
+        max: _max,
+        variance: _variance,
         standard_deviation: _sd
     };
 }

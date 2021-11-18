@@ -51,8 +51,8 @@ export function maxAndMin(numbers) {
         }
     }
     return {
-        min: _min,
-        max: _max
+        max: _max,
+        min: _min
     };
 }
 
@@ -70,7 +70,7 @@ export function countArray(array) {
     if (array.length == 0) {
         return {};
     }
-    let _counted = names.reduce(function (_all, _thing) {
+    let _counted = array.reduce(function (_all, _thing) {
         if (_thing in _all) {
             _all[_thing]++;
         }
