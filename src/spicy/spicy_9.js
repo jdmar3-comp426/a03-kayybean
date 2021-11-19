@@ -14,11 +14,11 @@
  * @return        Returns an array containing the return values obtained
  *                from calling the function
  */
-export const repeat = (fn, n, ...params) => {
-    let _array = [];
-    for (n; n > 0; n--) {
-        let _answer = fn(params);
-        _array.push(_answer);
+ export const repeat = (fn, n, ...params) => {
+    var _array = [];
+    for(let i = 0; i < n; i++) {
+        let _result = fn(...params);
+        _array[_array.length] = _result;
     }
     return _array;
 };
@@ -92,9 +92,9 @@ export const tenTimesFifty = () => {
  *    everyEven([1, 5, 1, 0, 1], x => x === 1)  <--  returns true
  *    everyEven([1, 1, 0, 1, 1], x => x === 1)  <--  returns false
  */
-export const everyEven = (arr, test) => {
-    for (let i = 0; i < arr.length; i + 2) {
-        if (test(arr[i]) == false) {
+ export const everyEven = (arr, test) => {
+    for(let i = 0; i < arr.length; i+=2) {
+        if(!test(arr[i])){
             return false;
         }
     }
@@ -121,9 +121,9 @@ export const everyEven = (arr, test) => {
  *    someEven([1, 1, 1, 1, 0], x => x === 0)  <--  returns true
  *    someEven([0, 0, 0, 0, 0], x => x === 0)  <--  returns true
  */
-export const someEven = (arr, test) => {
-    for (let i = 0; i < arr.length; i + 2) {
-        if (test(arr[i]) == true) {
+ export const someEven = (arr, test) => {
+    for(let i = 0; i < arr.length; i+=2) {
+        if(test(arr[i])){
             return true;
         }
     }
@@ -174,8 +174,13 @@ export const filter = (arr, test) => {
  *   array and returns true only if all of the even elements in the array are
  *   odd numbers. Use the "everyEven" function in this function.
  */
-export const allEvensAreOdd = (arr) => {
-    return everyEven(arr, (x => x % 2 == 1));
+ export const allEvensAreOdd = (arr) => {
+    const _odd = (_element) => {
+        if(_element%2 == 1) { 
+            return true;
+        }
+    }
+    return everyEven(arr, _odd);
 };
 
 
