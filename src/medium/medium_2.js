@@ -1,5 +1,5 @@
 import mpg_data from "./data/mpg_data.js";
-import {getStatistics} from "./medium_1.js";
+import { getStatistics } from "./medium_1.js";
 
 /*
 This section can be done by using the array prototype functions.
@@ -20,9 +20,12 @@ see under the methods section
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
 export const allCarStats = {
-    avgMpg: undefined,
-    allYearStats: undefined,
-    ratioHybrids: undefined,
+  avgMpg: {
+    city_mpg: getStatistics(mpg_data.keys("city_mpg")).mean,
+    highway_mpg: getStatistics(mpg_data.keys("highway_mpg")).mean
+  },
+  allYearStats: getStatistics(mpg_data.keys("year")),
+  ratioHybrids: (mpg_data.filter(car => car.hybrid == true).keys("hybrid").length / mpg_data.length),
 };
 
 
@@ -84,6 +87,39 @@ export const allCarStats = {
  * }
  */
 export const moreStats = {
-    makerHybrids: undefined,
-    avgMpgByYearAndHybrid: undefined
+  makerHybrids: mpg_data.reduce((acc, obj) => {
+    if (acc.findIndex(item => item.make == obj.make) == -1) {  //make does not exist on array
+      let hybrids = mpg_data.filter(car => car.make == obj.make).filter(car => car.hybrid == true).map(car => car.id);
+      //gives cars of make and hybrid id array
+    }
+    // use acc.push to add obj.make 
+    acc.push({ make: obj.make, hybrids: hybrids });
+    return acc;
+  }),
+  avgMpgByYearAndHybrid: mpg_data.reduce((acc, obj) => {
+    // see if the year already exists in the accumulator
+    if (acc.findIndex(item => item.year == obj.year) == -1) {  //year does not exist on accumulator
+      //calc the hybrid city and highway mpg
+      let hyb_city = getStatistics(mpg_data.filter(car => car.year == obj.year).filter(car => car.hybrid == true).map(car => car.city_mpg)).mean;
+      let hyb_highway = getStatistics(mpg_data.filter(car => car.year == obj.year).filter(car => car.hybrid == true).map(car => car.highway_mpg)).mean;
+
+      //calc the non hybrid city and highway mpg
+      let reg_city = getStatistics(mpg_data.filter(car => car.year == obj.year).filter(car => car.hybrid == false).map(car => car.city_mpg)).mean;
+      let reg_highway = getStatistics(mpg_data.filter(car => car.year == obj.year).filter(car => car.hybrid == false).map(car => car.highway_mpg)).mean;
+
+      acc[obj.year] = {
+        hybrid:
+        {
+          city: hyb_city,
+          highway: hyb_highway
+        },
+        notHybrid:
+        {
+          city: reg_city,
+          highway: reg_highway
+        }
+      };
+    }
+  })
+
 };
